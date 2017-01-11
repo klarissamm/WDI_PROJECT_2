@@ -1,0 +1,1 @@
+"use strict";var App=App||{};App.init=function(){this.$main=$("main"),$(".register").on("click",this.register.bind(this)),this.$main.on("submit","form",this.handleForm)},App.register=function(i){i&&i.preventDefault(),console.log("You clicked register")},App.handleForm=function(i){i&&i.preventDefault(),console.log("Form submitted")},$(App.init.bind(App));

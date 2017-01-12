@@ -1,4 +1,5 @@
 const App = App || {};
+const google = google;
 
 App.init = function() {
   this.apiUrl = 'http://localhost:3000/api';
@@ -6,15 +7,7 @@ App.init = function() {
   $('.register').on('click', this.register.bind(this));
   $('.login').on('click', this.login.bind(this));
   $('.logout').on('click', this.logout.bind(this));
-  $('.mapcanvas').on('click', this.mapcanvas.bind(this));
-  $('.usersIndex').on('click', this.usersIndex.bind(this));
   this.$main.on('submit', 'form', this.handleForm);
-
-
-  App.mapcanvas = function() {
-    console.log('test');
-  };
-
   if (this.getToken()) {
     this.loggedInState();
   } else {
@@ -22,11 +15,96 @@ App.init = function() {
   }
 };
 
+// App.addInfoWindowForRestaurant = function(restaurant, marker) {
+//   google.maps.event.addListener(marker, 'click', () => {
+//     if (typeof this.infoWindow !== 'undefined') this.infoWindow.close();
+//
+//     this.infoWindow = new google.maps.InfoWindow({
+//       content: `<img${ restaurant.restaurant.featured_image }><p>${ restaurant.restaurant.name }</p><p>${ restaurant.restaurant.location.address }</p><p>${ restaurant.restaurant.location.cuisines }</p>`
+//     });
+//
+//     this.infoWindow.open(this.map, marker);
+//   });
+// };
+//
+// App.createMarkerForRestaurant = function(restaurant) {
+//   const iconBase = 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Marker-Outside-Pink-icon.png';
+//   const latlng = new google.maps.LatLng(restaurant.restaurant.location.latitude, restaurant.restaurant.location.longitude);
+//   const marker = new google.maps.Marker({
+//     position: latlng,
+//     map: this.map,
+//     icon: iconBase,
+//     animation: google.maps.Animation.DROP
+//   });
+//
+//   this.addInfoWindowForRestaurant(restaurant, marker);
+// };
+//
+// App.loopThroughRestaurants = function(data) {
+//   $.each(data.restaurants, (index, restaurant) => {
+//     setTimeout(() => {
+//       App.createMarkerForRestaurant(restaurant);
+//     }, index * 50);
+//   });
+// };
+//
+// App.getRestaurants = function(){
+//   $.get({
+//     url: 'https://developers.zomato.com/api/v2.1/search?entity_id=256&entity_type=metro&q=restaurants&start=0&count=35&lat=49.280721695&lon=-123.1177491154&radius=2500&cuisines=1-250&establishment_type=1-200&collection_id=1-100&category=10&sort=rating&order=asc',
+//     headers: {
+//       'user-key': 'a076d160e3eff25d9c8448aa2c2dc85b'
+//     }
+//   }).done(this.loopThroughRestaurants);
+// };
+
+// App.createMenuBar = function() {
+//   this.$main.html(`
+//     <section class="sidebar">
+//   <h1>Choose your category</h1>
+//   <form method="post" action="#">
+//     <<div class="form-group">
+//       <label for="category_name">Breakfast, Lunch or Supper?</label>
+//       <select class="form-control" id="category" name="category">
+//           <option>Breakfast</option>
+//           <option>Lunch</option>
+//           <option>Dinner</option>
+//       </select>
+//     </div>
+//     <<div class="form-group">
+//       <label for="neighbourhood_name">Where will you be?</label>
+//       <select class="form-control" id="neighbourhood" name="neighbourhood">
+//           <option>Downtown</option>
+//           <option>Gastown</option>
+//           <option>Yaletown</option>
+//           <option>Chinatown</option>
+//       </select>
+//     </div>
+//     <button type="submit" class="btn btn-primary">Submit</button>
+//   </form>
+// </section>
+//   `);
+// };
+
+App.mapSetup = function(){
+  $('#map-canvas').show();
+  const canvas = document.getElementById('map-canvas');
+
+  const mapOptions = {
+    zoom: 14,
+    center: new google.maps.LatLng(49.2824303,-123.126847),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  this.map = new google.maps.Map(canvas, mapOptions);
+  this.createMenuBar();
+  // this.getRestaurants();
+};
+
 
 App.loggedInState = function() {
   $('.loggedIn').show();
   $('.loggedOut').hide();
-  this.usersIndex();
+  this.mapSetup();
 };
 
 App.loggedOutState = function() {
@@ -37,30 +115,39 @@ App.loggedOutState = function() {
 
 App.register = function(e){
   if (e) e.preventDefault();
-  this.$main.html(`
-    <h2>Register</h2>
-    <form method="post" action="/register">
-      <div class="form-group">
-        <input class="form-control" type="text" name="user[username]" placeholder="Username">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="email" name="user[email]" placeholder="Email">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="user[password]" placeholder="Password">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="user[passwordConfirmation]" placeholder="Password Confirmation">
-      </div>
-      <input class="btn btn-primary" type="submit" value="Register">
-    </form>
+
+  $('#map-canvas').hide();
+  this.$main.html(`<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="modal-dialog modal-lg" role="document">
+<div class="modal-content">
+<div class="form-group">
+  <input class="form-control" type="text" name="user[username]" placeholder="Username">
+</div>
+<div class="form-group">
+  <input class="form-control" type="email" name="user[email]" placeholder="Email">
+</div>
+<div class="form-group">
+  <input class="form-control" type="password" name="user[password]" placeholder="Password">
+</div>
+<div class="form-group">
+  <input class="form-control" type="password" name="user[passwordConfirmation]" placeholder="Password Confirmation">
+</div>
+<input class="btn btn-primary" type="submit" value="Register">
+</form>
+</div>
+</div>
+</div>
   `);
+  $('#myModal').modal('show');
 };
 
 App.login = function(e) {
   e.preventDefault();
+  $('#map-canvas').hide();
   this.$main.html(`
-    <h2>Login</h2>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
     <form method="post" action="/login">
       <div class="form-group">
         <input class="form-control" type="email" name="email" placeholder="Email">
@@ -70,6 +157,9 @@ App.login = function(e) {
       </div>
       <input class="btn btn-primary" type="submit" value="Login">
     </form>
+    </div>
+  </div>
+</div>
   `);
 };
 
@@ -77,32 +167,6 @@ App.logout = function(e) {
   e.preventDefault();
   this.removeToken();
   this.loggedOutState();
-};
-
-App.usersIndex = function(e) {
-  if (e) e.preventDefault();
-  const url = `${this.apiUrl}/users`;
-
-  return this.ajaxRequest(url, 'get', null, data => {
-    this.$main.html(`
-      <div class="card-deck-wrapper">
-        <div class="card-deck">
-        </div>
-      </div>
-    `);
-    const $container = this.$main.find('.card-deck');
-    $.each(data.users, (i, user) => {
-      $container.append(`
-        <div class="card col-md-4">
-         <img class="card-img-top" src="http://fillmurray.com/300/300" alt="Card image cap">
-         <div class="card-block">
-           <h4 class="card-title">${user.username}</h4>
-           <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-           <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-         </div>
-       </div>`);
-    });
-  });
 };
 
 App.handleForm = function(e){

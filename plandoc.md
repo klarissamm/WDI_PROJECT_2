@@ -25,9 +25,55 @@ a076d160e3eff25d9c8448aa2c2dc85b
       "state_code": "BC"
     },
     
+  lat - 49.280721695
+  labg - -123.1177491154
+  
 #Category API info:
  ```
- {
+"categories": [
+    {
+      "categories": {
+        "id": 1,
+        "name": "Delivery"
+      }
+    },
+    {
+      "categories": {
+        "id": 2,
+        "name": "Dine-out"
+      }
+    },
+    {
+      "categories": {
+        "id": 3,
+        "name": "Nightlife"
+      }
+    },
+    {
+      "categories": {
+        "id": 4,
+        "name": "Catching-up"
+      }
+    },
+    {
+      "categories": {
+        "id": 5,
+        "name": "Takeaway"
+      }
+    },
+    {
+      "categories": {
+        "id": 6,
+        "name": "Cafes"
+      }
+    },
+    {
+      "categories": {
+        "id": 7,
+        "name": "Daily Menus"
+      }
+    },
+    {
       "categories": {
         "id": 8,
         "name": "Breakfast"
@@ -45,6 +91,31 @@ a076d160e3eff25d9c8448aa2c2dc85b
         "name": "Dinner"
       }
     },
+    {
+      "categories": {
+        "id": 11,
+        "name": "Pubs & Bars"
+      }
+    },
+    {
+      "categories": {
+        "id": 12,
+        "name": "Premium Delivery"
+      }
+    },
+    {
+      "categories": {
+        "id": 13,
+        "name": "Pocket Friendly Delivery"
+      }
+    },
+    {
+      "categories": {
+        "id": 14,
+        "name": "Clubs & Lounges"
+      }
+    }
+  ]
  ```
 #Can search via collection:
 Weekend brunches

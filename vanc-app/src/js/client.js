@@ -58,6 +58,7 @@ App.getRestaurants = function(){
 };
 
 App.mapSetup = function(){
+  $('.modal').modal('hide');
   $('#map-canvas').show();
   const canvas = document.getElementById('map-canvas');
 
@@ -68,27 +69,68 @@ App.mapSetup = function(){
   };
 
   this.map = new google.maps.Map(canvas, mapOptions);
-  this.getRestaurants();
 };
 
 
 App.loggedInState = function() {
   $('.loggedIn').show();
   $('.loggedOut').hide();
-  this.mapSetup();
+  // this.getRestaurants();
+  this.$modalContent.html(`
+    <form class="form-inline">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Let's begin</h4>
+    </div>
+    <div class="modal-body">
+    <h6>Where are you?</h6>
+    <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
+    <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
+    <option selected>Neighbourhood...</option>
+    <option value="Yaletown">Yaletown</option>
+    <option value="Gastown">Gastown</option>
+    <option value="Downtown">Downtown</option>
+    </select>
+    <h6>What meal are you looking for?</h6>
+    <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
+    <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
+    <option selected>Meal...</option>
+    <option value="Breakfast">Breakfast</option>
+    <option value="Lunch">Lunch</option>
+    <option value="Supper">Supper</option>
+    </select>
+    <button type="submit" class="btn btn-primary go">Go</button>
+    </div>
+    </form>`);
+
+  $('.modal').modal('show');
+  $('.go').on('click', App.getRestaurants());
 };
 
 App.loggedOutState = function() {
   $('.loggedIn').hide();
   $('.loggedOut').show();
+  this.mapSetup();
+  this.$modalContent.html(`
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Welcome to VancApp!</h4>
+    </div>
+    <div class="modal-body">
+    <h3>Feeling hungry but not sure where to go?</h3>
+    <h6>Well you're in luck, because Vancouver is <span>the best city for food</span> and we've got you covered! Just tell us what neighbourhood you're in and what kind of meal you're looking for and we'll work some magic to let you know where's tasty nearby...</h6>
+    <h6>But first of all, please register or login below:</h6>
+    <button type="button" name="button" class="register">Register</button>
+    <button type="button" name="button" class="login">Log In</button>
+    </div>`);
+
+  $('.modal').modal('show');
   $('.register').on('click', this.register.bind(this));
   $('.login').on('click', this.login.bind(this));
 };
 
 App.register = function(e){
   if (e) e.preventDefault();
-
-  $('#map-canvas').hide();
   this.$modalContent.html(`
     <form method="post" action="/register">
       <div class="modal-header">
@@ -117,7 +159,6 @@ App.register = function(e){
 
 App.login = function(e) {
   e.preventDefault();
-  $('#map-canvas').hide();
   this.$modalContent.html(`
     <form method="post" action="/login">
     <div class="modal-header">

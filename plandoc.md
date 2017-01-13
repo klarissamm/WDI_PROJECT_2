@@ -31,13 +31,7 @@ a076d160e3eff25d9c8448aa2c2dc85b
 #Category API info:
  ```
 "categories": [
-    {
-      "categories": {
-        "id": 1,
-        "name": "Delivery"
-      }
-    },
-    {
+       {
       "categories": {
         "id": 2,
         "name": "Dine-out"
@@ -45,32 +39,8 @@ a076d160e3eff25d9c8448aa2c2dc85b
     },
     {
       "categories": {
-        "id": 3,
-        "name": "Nightlife"
-      }
-    },
-    {
-      "categories": {
-        "id": 4,
-        "name": "Catching-up"
-      }
-    },
-    {
-      "categories": {
         "id": 5,
         "name": "Takeaway"
-      }
-    },
-    {
-      "categories": {
-        "id": 6,
-        "name": "Cafes"
-      }
-    },
-    {
-      "categories": {
-        "id": 7,
-        "name": "Daily Menus"
       }
     },
     {
@@ -90,30 +60,6 @@ a076d160e3eff25d9c8448aa2c2dc85b
         "id": 10,
         "name": "Dinner"
       }
-    },
-    {
-      "categories": {
-        "id": 11,
-        "name": "Pubs & Bars"
-      }
-    },
-    {
-      "categories": {
-        "id": 12,
-        "name": "Premium Delivery"
-      }
-    },
-    {
-      "categories": {
-        "id": 13,
-        "name": "Pocket Friendly Delivery"
-      }
-    },
-    {
-      "categories": {
-        "id": 14,
-        "name": "Clubs & Lounges"
-      }
     }
   ]
  ```
@@ -129,6 +75,67 @@ CAN I FILTER BY RATING? AND SHOW TOP 20 OR SOMETHING?
 <li>Yaletown
 <li>Gastown
 
+    {
+      "entity_type": "subzone",
+      "entity_id": 98130,
+      "title": "Yaletown, Vancouver",
+      "latitude": 49.2755687553,
+      "longitude": -123.1212622066,
+      "city_id": 256,
+      "city_name": "Metro Vancouver",
+      "country_id": 37,
+      "country_name": "Canada"
+    },
+    
+        {
+      "entity_type": "subzone",
+      "entity_id": 98135,
+      "title": "Downtown, Vancouver",
+      "latitude": 49.282385484,
+      "longitude": -123.1196465435,
+      "city_id": 256,
+      "city_name": "Metro Vancouver",
+      "country_id": 37,
+      "country_name": "Canada"
+    },
+    
+    {
+      "entity_type": "subzone",
+      "entity_id": 98137,
+      "title": "Gastown, Vancouver",
+      "latitude": 49.2824904592,
+      "longitude": -123.1057980718,
+      "city_id": 256,
+      "city_name": "Metro Vancouver",
+      "country_id": 37,
+      "country_name": "Canada"
+    },
+    
+    {
+      "entity_type": "subzone",
+      "entity_id": 98139,
+      "title": "Kitsilano, Vancouver",
+      "latitude": 49.2666413442,
+      "longitude": -123.1629130201,
+      "city_id": 256,
+      "city_name": "Metro Vancouver",
+      "country_id": 37,
+      "country_name": "Canada"
+    },
+    
+    {
+      "entity_type": "subzone",
+      "entity_id": 98129,
+      "title": "Mount Pleasant, Vancouver",
+      "latitude": 49.2623105764,
+      "longitude": -123.1012626121,
+      "city_id": 256,
+      "city_name": "Metro Vancouver",
+      "country_id": 37,
+      "country_name": "Canada"
+    },
+    
+    
 
 ##picture of vancouver
 https://unsplash.com/search/vancouver?photo=5tCXFBXAom4

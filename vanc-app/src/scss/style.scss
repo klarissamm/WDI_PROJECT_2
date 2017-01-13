@@ -1,9 +1,58 @@
 html, body {
   margin: 0;
+  font-family: 'Libre Baskerville', serif;
 }
 
 #map-canvas {
   width: 100%;
   height: 100vh;
   margin: 0 auto;
+}
+
+div {
+
+.modal-content.welcome {
+  text-align: center;
+h6 {
+  line-height: 1.5;
+}
+p {
+  line-height: 2;
+  color: red;
+}
+button {
+  width: 83px;
+  height: 29px;
+  font-size: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+}
+
+.modal-content.questions {
+  background-color: black;
+  color: white;
+  width: 200px;
+  height: 550px;
+  text-align: center;
+
+.modal-title {
+  font-size: 28px;
+}
+
+p {
+  margin-top: 30px;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.neighbourhood {
+  margin-bottom: 30px;
+}
+
+.category {
+  margin-bottom: 25px;
+}
+
+}
 }

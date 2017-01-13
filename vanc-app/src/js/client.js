@@ -8,6 +8,8 @@ App.init = function() {
 
   $('.logout').on('click', this.logout.bind(this));
   this.$modalContent.on('submit', 'form', this.handleForm);
+  this.$modalContent.on('click', '.go', this.getRestaurants);
+
   if (this.getToken()) {
     this.loggedInState();
   } else {
@@ -49,12 +51,24 @@ App.loopThroughRestaurants = function(data) {
 };
 
 App.getRestaurants = function(){
+  $('.modal').modal('hide');
+  $('#map-canvas').show();
+
+  const location = $('.neighbourhood').val();
+  const category = $('.category').val();
+
+  // if (location === 98130) {
+  //   const  lat = 49.2755687553;
+  //   const lon = -123.1212622066;
+  //   const q = 'Yaletown';
+  // }
+
   $.get({
-    url: 'https://developers.zomato.com/api/v2.1/search?entity_id=256&entity_type=metro&q=restaurants&start=0&count=35&lat=49.280721695&lon=-123.1177491154&radius=2500&cuisines=1-250&establishment_type=1-200&collection_id=1-100&category=10&sort=rating&order=asc',
+    url: `https://developers.zomato.com/api/v2.1/search?entity_id=${location}&entity_type=subzone&q=Yaletown&count=15&lat=49.2755687553&lon=-123.1212622066&radius=700&category=${category}&sort=rating&order=desc`,
     headers: {
       'user-key': 'a076d160e3eff25d9c8448aa2c2dc85b'
     }
-  }).done(this.loopThroughRestaurants);
+  }).done(App.loopThroughRestaurants);
 };
 
 App.mapSetup = function(){
@@ -75,51 +89,50 @@ App.mapSetup = function(){
 App.loggedInState = function() {
   $('.loggedIn').show();
   $('.loggedOut').hide();
-  // this.getRestaurants();
+  this.$modalContent.addClass('questions');
   this.$modalContent.html(`
-    <form class="form-inline">
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">Let's begin</h4>
     </div>
     <div class="modal-body">
-    <h6>Where are you?</h6>
-    <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
-    <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
+    <p>Where are you?</p>
+    <select class="neighbourhood custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
     <option selected>Neighbourhood...</option>
-    <option value="Yaletown">Yaletown</option>
-    <option value="Gastown">Gastown</option>
-    <option value="Downtown">Downtown</option>
+    <option value="98130">Yaletown</option>
+    <option value="98137">Gastown</option>
+    <option value="98135">Downtown</option>
+    <option value="98139">Kitsilano</option>
+    <option value="98129">Main Street</option>
     </select>
-    <h6>What meal are you looking for?</h6>
-    <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
-    <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
+    <p>What meal are you looking for?</p>
+    <select class="category custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
     <option selected>Meal...</option>
-    <option value="Breakfast">Breakfast</option>
-    <option value="Lunch">Lunch</option>
-    <option value="Supper">Supper</option>
+    <option value="8">Breakfast</option>
+    <option value="9">Lunch</option>
+    <option value="2">Supper</option>
     </select>
-    <button type="submit" class="btn btn-primary go">Go</button>
+    <button type="submit" class="go btn btn-primary">Go</button>
     </div>
-    </form>`);
+    `);
 
   $('.modal').modal('show');
-  $('.go').on('click', App.getRestaurants());
 };
 
 App.loggedOutState = function() {
   $('.loggedIn').hide();
   $('.loggedOut').show();
   this.mapSetup();
+  this.$modalContent.addClass('welcome');
   this.$modalContent.html(`
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">Welcome to VancApp!</h4>
+    <h3 class="modal-title">Welcome to VancApp!</h3>
     </div>
     <div class="modal-body">
-    <h3>Feeling hungry but not sure where to go?</h3>
+    <h4>Feeling hungry but not sure where to go?</h4>
     <h6>Well you're in luck, because Vancouver is <span>the best city for food</span> and we've got you covered! Just tell us what neighbourhood you're in and what kind of meal you're looking for and we'll work some magic to let you know where's tasty nearby...</h6>
-    <h6>But first of all, please register or login below:</h6>
+    <p>But first of all, please register or login below:</p>
     <button type="button" name="button" class="register">Register</button>
     <button type="button" name="button" class="login">Log In</button>
     </div>`);

@@ -2,12 +2,12 @@ const App = App || {};
 const google = google;
 
 App.init = function() {
-  this.apiUrl = 'http://localhost:3000/api';
-  this.$main  = $('main');
-  $('.register').on('click', this.register.bind(this));
-  $('.login').on('click', this.login.bind(this));
+  this.apiUrl        = 'http://localhost:3000/api';
+  this.$main         = $('main');
+  this.$modalContent = $('.modal-content');
+
   $('.logout').on('click', this.logout.bind(this));
-  this.$main.on('submit', 'form', this.handleForm);
+  this.$modalContent.on('submit', 'form', this.handleForm);
   if (this.getToken()) {
     this.loggedInState();
   } else {
@@ -81,48 +81,59 @@ App.loggedInState = function() {
 App.loggedOutState = function() {
   $('.loggedIn').hide();
   $('.loggedOut').show();
-  this.register();
+  $('.register').on('click', this.register.bind(this));
+  $('.login').on('click', this.login.bind(this));
 };
 
 App.register = function(e){
   if (e) e.preventDefault();
 
   $('#map-canvas').hide();
-  this.$main.html(`
-    <h2>Register</h2>
+  this.$modalContent.html(`
     <form method="post" action="/register">
-      <div class="form-group">
-        <input class="form-control" type="text" name="user[username]" placeholder="Username">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Register</h4>
       </div>
-      <div class="form-group">
-        <input class="form-control" type="email" name="user[email]" placeholder="Email">
+      <div class="modal-body">
+        <div class="form-group">
+          <input class="form-control" type="text" name="user[username]" placeholder="Username">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="email" name="user[email]" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="password" name="user[password]" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="password" name="user[passwordConfirmation]" placeholder="Password Confirmation">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Register">
       </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="user[password]" placeholder="Password">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="user[passwordConfirmation]" placeholder="Password Confirmation">
-      </div>
-      <input class="btn btn-primary" type="submit" value="Register">
-    </form>
-  `);
+    </form>`);
+
+  $('.modal').modal('show');
 };
 
 App.login = function(e) {
   e.preventDefault();
   $('#map-canvas').hide();
-  this.$main.html(`
-    <h2>Login</h2>
+  this.$modalContent.html(`
     <form method="post" action="/login">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title">Login</h4>
+    </div>
+    <div class="modal-body">
       <div class="form-group">
-        <input class="form-control" type="email" name="email" placeholder="Email">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="password" placeholder="Password">
-      </div>
-      <input class="btn btn-primary" type="submit" value="Login">
-    </form>
-  `);
+      <input class="form-control" type="email" name="email" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="password" name="password" placeholder="Password">
+    </div>
+    <input class="btn btn-primary" type="submit" value="Login">
+  </form>`);
+  $('.modal').modal('show');
 };
 
 App.logout = function(e) {
@@ -133,6 +144,7 @@ App.logout = function(e) {
 
 App.handleForm = function(e){
   e.preventDefault();
+  $('.modal').modal('hide');
 
   const url    = `${App.apiUrl}${$(this).attr('action')}`;
   const method = $(this).attr('method');

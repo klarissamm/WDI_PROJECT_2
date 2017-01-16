@@ -1,10 +1,34 @@
 #Random notes
 
-##Colours
+##Colours I like
 
 `#d8828f`
 `#e59fa9`
 `#ebc0cf`
+D81E5B
+smokey black: 090909
+ruddy pink: E78F8E
+Great blue: #46B1C9
+amazing pink: FF4365
+ash grey: #ACBDBA
+dim grey: 696D7D
+great pink: #E75A7C
+PINK! D90368
+
+
+
+POSSIBLE FOR THE COLOUR SCHEME:
+BASE COLOUR: #C9C6E4
+DARKER TONE OF BASE: 726BAA
+BFDBF7 - PALE AQUA
+smokey black: 090909
+ash grey: #ACBDBA
+dim grey: 696D7D
+DARK PURPLE - #330C2F
+F2FDFF AND FFE5D4
+
+
+
 
 ##Zomato API key:
 

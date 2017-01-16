@@ -5,54 +5,122 @@ html, body {
 
 #map-canvas {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 54px);
   margin: 0 auto;
 }
 
-div {
 
-.modal-content.welcome {
+  .modal-content.welcome {
+    background-image: url('../images/vanc.jpg');
+    background-size: cover;
+    height: calc(100vh - 54px);
+    width: auto;
+    text-align: center;
+    h6 {
+      line-height: 1.5;
+    }
+    p {
+      line-height: 2;
+      color: red;
+    }
+    button {
+      width: 83px;
+      height: 29px;
+      font-size: 15px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+}
+
+
+  .navbar.navbar-light.bg-faded {
+    background: rgba(46,41,78,0.9);
+    color: #FFF;
+  }
+
+  a.nav-link.featured {
+    position: absolute;
+    right: 120px;
+    color: #ACBDBA;
+  }
+
+  .sidebar {
+    position: absolute;
+    z-index: 99;
+    top: 54px;
+    width: 240px;
+    height: calc(100vh - 54px);
+    // background-color: #E91E63;
+    // background-color: #f1e3e3;
+    // background: #CCB3B3;
+    background: rgba(46,41,78,0.7);
+    border-radius: 10px;
+    color: #ACBDBA;
+
+
+    h3 {
+      margin-top: 150px;
+    }
+  }
+
+.burger-menu {
+  // visibility: hidden;
+  position: absolute;
+  height: 40px;
+  width: auto;
+  left: 45px;
+}
+
+.infoWindow {
+  height: 250px;
+  width: 180px;
+
+  img {
+    height: auto;
+    width: 180px;
+  }
+
+}
+
+
+.recommended {
+  position: absolute;
+  z-index: 99;
+  top: 54px;
+  right: 35px;
   text-align: center;
-h6 {
-  line-height: 1.5;
-}
-p {
-  line-height: 2;
-  color: red;
-}
-button {
-  width: 83px;
-  height: 29px;
-  font-size: 15px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
+  width: 240px;
+  height: 300px;
+  background: rgba(46,41,78,0.8);
+  border-radius: 10px;
+  // box-shadow: 3px 3px 5px 6px #eae6f0;
+  color: #ACBDBA;
 }
 
-.modal-content.questions {
-  background-color: black;
-  color: white;
-  width: 200px;
-  height: 550px;
-  text-align: center;
 
-.modal-title {
-  font-size: 28px;
-}
 
-p {
-  margin-top: 30px;
-  font-size: 20px;
-  line-height: 20px;
-}
+  .modal-content.questions {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 550px;
+    text-align: center;
 
-.neighbourhood {
-  margin-bottom: 30px;
-}
+    .modal-title {
+      font-size: 28px;
+    }
 
-.category {
-  margin-bottom: 25px;
-}
+    p {
+      margin-top: 30px;
+      font-size: 20px;
+      line-height: 20px;
+    }
 
-}
-}
+    .neighbourhood {
+      margin-bottom: 30px;
+    }
+
+    .category {
+      margin-bottom: 25px;
+    }
+  }

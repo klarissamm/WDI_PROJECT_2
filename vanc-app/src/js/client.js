@@ -8,15 +8,17 @@ App.init = function() {
   this.$sidebar      = $('.sidebar');
   this.$recommended  = $('.recommended');
   this.$fullImage    = $('.full-image');
+  this.markersArray  = [];
 
   $('.logout').on('click', this.logout.bind(this));
+  $('.home-icon').on('click', this.welcome.bind(this));
   $('.featured').on('click', this.featuredRestaurant);
-  $('.burger-menu').on('click', this.showSidebar);
+  $('.burger-menu').on('click', this.toggleSidebar);
   this.$modalContent.on('submit', 'form', this.handleForm);
-  this.$sidebar.on('click', '.go', this.getRestaurants);
-  this.$sidebar.on('click', '.close', this.closeSidebar);
+  // this.$sidebar.on('click', '.close', this.closeSidebar);
   this.$main.on('click', '.add', this.addChoiceToSidebar);
   this.$recommended.on('click', '.close', this.closeFeatures);
+  $('.option').on('click', this.blah.bind(this));
 
   if (this.getToken()) {
     this.loggedInState();
@@ -27,8 +29,23 @@ App.init = function() {
   this.mapSetup();
 };
 
-App.addChoiceToSidebar = function(marker) {
-  marker.setMap(null);
+App.addChoiceToSidebar = function(e) {
+  // remove all markers from map
+  $.each(App.markersArray, (index, marker) => {
+    marker.setMap(null);
+  });
+  const $restaurantChoice = $(e.target).parent();
+
+  const restaurantChoiceTemplate = `
+    <div class="choice">
+      <img src=${$restaurantChoice.find('img').attr('src')}>
+      <h4>${$restaurantChoice.find('h2').html()}</h4>
+      <p>${$restaurantChoice.find('p').html()}</p>
+    </div>
+  `;
+
+  $('.selected').html(restaurantChoiceTemplate).removeClass('selected');
+  // $('.selected').removeClass('selected');
 };
 
 App.addInfoWindowForRestaurant = function(restaurant, marker) {
@@ -37,8 +54,13 @@ App.addInfoWindowForRestaurant = function(restaurant, marker) {
     if (typeof this.infoWindow !== 'undefined') this.infoWindow.close();
 
     this.infoWindow = new google.maps.InfoWindow({
-      content: `<div class='infoWindow'><img src=${ restaurant.restaurant.featured_image }><p>${ restaurant.restaurant.name }</p><p>${ restaurant.restaurant.location.address }</p><p>${ restaurant.restaurant.cuisines }</p>
-      <button class='add' type='button' value='${ restaurant.restaurant.name }' name='button'>Add</button></div>`
+      content: `<div class='infoWindow'>
+                  <img src=${ restaurant.restaurant.featured_image }>
+                  <h2>${ restaurant.restaurant.name }</h2>
+                  <p>${ restaurant.restaurant.location.address }</p>
+                  <p>${ restaurant.restaurant.cuisines }</p>
+                  <button class='add' type='button' value='${ restaurant.restaurant.name }' name='button'>Add</button>
+                </div>`
     });
 
     this.infoWindow.open(this.map, marker);
@@ -46,7 +68,7 @@ App.addInfoWindowForRestaurant = function(restaurant, marker) {
 };
 
 App.createMarkerForRestaurant = function(restaurant) {
-  const iconBase = '../images/icon6.png';
+  const iconBase = '../images/icon3.png';
   const latlng = new google.maps.LatLng(restaurant.restaurant.location.latitude, restaurant.restaurant.location.longitude);
   const marker = new google.maps.Marker({
     position: latlng,
@@ -55,6 +77,7 @@ App.createMarkerForRestaurant = function(restaurant) {
     animation: google.maps.Animation.DROP
   });
 
+  App.markersArray.push(marker);
   this.addInfoWindowForRestaurant(restaurant, marker);
 };
 
@@ -66,7 +89,9 @@ App.loopThroughRestaurants = function(data) {
   });
 };
 
-App.getRestaurants = function(){
+App.getRestaurants = function(meal){
+  $('.userOptions').hide();
+
   const locations = {
     '98130': 'Yaletown',
     '98137': 'Gastown',
@@ -75,9 +100,15 @@ App.getRestaurants = function(){
     '98129': 'Main Street'
   };
 
+  const categories = {
+    'breakfast': '8',
+    'lunch': '9',
+    'dinner': '2'
+  };
+
   const locationId   = $('.neighbourhood').val();
   const locationName = locations[locationId];
-  const category     = $('.category').val();
+  const category     = categories[meal];
 
   $.get({
     url: `https://developers.zomato.com/api/v2.1/search?entity_id=${locationId}&entity_type=subzone&q=${locationName}&count=15&radius=700&category=${category}&sort=rating&order=desc`,
@@ -94,7 +125,8 @@ App.mapSetup = function(){
     zoom: 13,
     center: new google.maps.LatLng(49.2824303,-123.126847),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
-    styles: [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#000000"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#000000"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":17},{"weight":1.2}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":21}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":19}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":17}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"saturation":"-100"},{"lightness":"-100"},{"gamma":"0.00"}]}]};
+    styles: [{'featureType':'all','stylers':[{'saturation':0},{'hue':'#e7ecf0'}]},{'featureType':'road','stylers':[{'saturation':-70}]},{'featureType':'transit','stylers':[{'visibility':'off'}]},{'featureType':'poi','stylers':[{'visibility':'off'}]},{'featureType':'water','stylers':[{'visibility':'simplified'},{'saturation':-60}]}]
+  };
 
   this.map = new google.maps.Map(canvas, mapOptions);
 };
@@ -104,8 +136,7 @@ App.loggedInState = function() {
   $('.loggedIn').show();
   $('.loggedOut').hide();
   $('.recommended').hide();
-
-  this.showSidebar();
+  this.$fullImage.hide();
 };
 
 App.loggedOutState = function() {
@@ -113,21 +144,22 @@ App.loggedOutState = function() {
   $('.loggedOut').show();
   $('.sidebar').hide();
   $('.recommended').hide();
-  this.mapSetup();
+  this.$fullImage.show();
   this.$modalContent.addClass('welcome');
   this.$modalContent.html(`
     <div class='modal-header'>
-    <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
     <h3 class='modal-title'>Feeling hungry?</h3>
     </div>
     <div class='modal-body'>
-    <h6>Well you're in luck, because Vancouver is <span>the best city for food</span> and we've got you covered! Just tell us what neighbourhood you're in and what kind of meal you're looking for and we'll work some magic to let you know where's tasty nearby...</h6>
+    <h6>Well you're in luck, because Vancouver has <span>the best food</span> in the world!! Choose what meal you're looking for and then tell us what neighbourhood you're in... We'll work some magic to let you know what's tasty nearby...</h6>
     <p>But first of all, please register or login below:</p>
     <button type='button' name='button' class='register'>Register</button>
     <button type='button' name='button' class='login'>Log In</button>
     </div>`);
+  setTimeout(() => {
+    $('.modal').modal('show');
+  }, 1500);
 
-  $('.modal').modal('show');
   $('.register').on('click', this.register.bind(this));
   $('.login').on('click', this.login.bind(this));
 };
@@ -137,7 +169,6 @@ App.register = function(e){
   this.$modalContent.html(`
     <form method='post' action='/register'>
       <div class='modal-header'>
-        <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
         <h4 class='modal-title'>Register</h4>
       </div>
       <div class='modal-body'>
@@ -165,7 +196,6 @@ App.login = function(e) {
   this.$modalContent.html(`
     <form method='post' action='/login'>
     <div class='modal-header'>
-      <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
       <h4 class='modal-title'>Login</h4>
     </div>
     <div class='modal-body'>
@@ -183,6 +213,11 @@ App.login = function(e) {
 App.logout = function(e) {
   e.preventDefault();
   this.removeToken();
+  this.loggedOutState();
+};
+
+App.welcome = function(e) {
+  e.preventDefault();
   this.loggedOutState();
 };
 
@@ -229,40 +264,8 @@ App.removeToken = function() {
   return window.localStorage.clear();
 };
 
-App.showSidebar = function() {
-  $('.sidebar').show();
-
-  $('.sidebar').html(`
-    <button type='button' class='close'
-    aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-    <div class='neighbourhoodOptions'>
-    <p>Where are you?</p>
-    <select class='neighbourhood custom-select mb-2 mr-sm-2 mb-sm-0' id='inlineFormCustomSelect'>
-    <option selected>Neighbourhood...</option>
-    <option value='98130'>Yaletown</option>
-    <option value='98137'>Gastown</option>
-    <option value='98135'>Downtown</option>
-    <option value='98139'>Kitsilano</option>
-    <option value='98129'>Main Street</option>
-    </select>
-    </div>
-    <div class ='mealOptions'>
-    <p>What meal are you looking for?</p>
-    <select class='category custom-select mb-2 mr-sm-2 mb-sm-0' id='inlineFormCustomSelect'>
-    <option selected>Meal...</option>
-    <option value='8'>Breakfast</option>
-    <option value='9'>Lunch</option>
-    <option value='2'>Supper</option>
-    </select>
-    </div>
-    <button type='submit' class='go btn btn-primary'>Go</button>
-    <div class ='usersChoices'>
-    <h3>You have chosen...</h3>
-    <p class='choice1'>CHOICE1</p>
-    <p>for... CATEGORY in LOCATIONNAME</p>
-    </div>
-    </div>
-    `);
+App.toggleSidebar = function() {
+  $('.sidebar').toggleClass('open-sidebar close-sidebar');
 };
 
 App.closeSidebar = function() {
@@ -290,13 +293,16 @@ App.closeFeatures = function() {
   $('.recommended').hide();
 };
 
-// App.setImageTimeout = function(){
-//
-//   this.$fullImage.style.visibility='visible';
-//   setTimeout('Show', 2000);
-//   App.mapSetup();
-// };
 
+App.blah = function(e) {
+  $(e.target).addClass('selected');
+  const meal = e.target.id;
+
+  $('.userOptions').show();
+  $('.userOptions .go').on('click', () => {
+    App.getRestaurants(meal);
+  });
+};
 
 
 $(App.init.bind(App));

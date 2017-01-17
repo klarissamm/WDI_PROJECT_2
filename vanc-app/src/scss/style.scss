@@ -1,75 +1,126 @@
+$third-color: #EEEEFF;
+// $third-color: #8EB8E5;
+// $third-color: #A9DDD6;
+$primary-color: #335673;
+$second-color: #909392;
+$main-font: 'Lato', sans-serif;
+$title-font: 'Rock Salt', cursive;
+$map-color: #bfd3e4;
+
 html, body {
   margin: 0;
-  font-family: 'Libre Baskerville', serif;
+  font-family: $main-font;
+  overflow: hidden;
+}
+
+.full-image {
+  display: block;
+  background-image: url('../images/vanc3.jpg');
+  background-size: cover;
+  width: 100%;
+  height: calc(100vh - 54px);
+  margin: 0;
+  z-index: 98;
 }
 
 #map-canvas {
   width: 100%;
   height: calc(100vh - 54px);
   margin: 0 auto;
+  z-index: 98;
 }
 
-
-  .modal-content.welcome {
-    background-image: url('../images/vanc.jpg');
-    background-size: cover;
-    height: calc(100vh - 54px);
-    width: auto;
-    text-align: center;
-    h6 {
-      line-height: 1.5;
-    }
-    p {
-      line-height: 2;
-      color: red;
-    }
-    button {
-      width: 83px;
-      height: 29px;
-      font-size: 15px;
-      margin-left: 10px;
-      margin-right: 10px;
-    }
+.navbar {
+  border-radius: 0px !important;
+  height: 50px;
 }
 
+.navbar.navbar-light.bg-faded {
+  background: $primary-color;
+}
 
-  .navbar.navbar-light.bg-faded {
-    background: rgba(46,41,78,0.9);
-    color: #FFF;
-  }
+.navbar-light .navbar-nav .nav-link {
+  color: $third-color;
+}
 
-  a.nav-link.featured {
-    position: absolute;
-    right: 120px;
-    color: #ACBDBA;
-  }
+.navbar-light .navbar-nav .nav-link:hover {
+  color: $map-color;
+}
 
-  .sidebar {
-    position: absolute;
-    z-index: 99;
-    top: 54px;
-    width: 240px;
-    height: calc(100vh - 54px);
-    // background-color: #E91E63;
-    // background-color: #f1e3e3;
-    // background: #CCB3B3;
-    background: rgba(46,41,78,0.7);
-    border-radius: 10px;
-    color: #ACBDBA;
-
-
-    h3 {
-      margin-top: 150px;
-    }
-  }
-
-.burger-menu {
-  // visibility: hidden;
+a.nav-link.featured {
   position: absolute;
-  height: 40px;
-  width: auto;
-  left: 45px;
+  right: 110px;
 }
+
+a.nav-link.logout {
+  position: absolute;
+  right: 35px;
+}
+
+
+.modal-content.welcome {
+  height: 350px;
+  width: 600px;
+  text-align: center;
+  position: absolute;
+  top: 80px;
+  background-color: #909392;
+  color: $primary-color;
+  border: 5px solid $primary-color;
+  border-radius: 10px;
+
+  span {
+    color: $third-color;
+  }
+
+  h3 {
+    font-size: 2.5rem;
+  }
+
+  h6 {
+    line-height: 1.5;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  h4 {
+    color: $third-color;
+
+  }
+
+  p {
+    margin-top: 30px;
+    line-height: 2;
+    font-size: 19px;
+  }
+
+  button {
+    width: 83px;
+    height: 29px;
+    font-size: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: $primary-color;
+    color: $third-color;
+    border: 1px solid $third-color;
+    border-radius: 5px;
+  }
+
+  input.btn.btn-primary {
+    background-color: $primary-color;
+    border: 1px solid $third-color;
+    color: $third-color;
+    border-radius: 5px 5px;
+  }
+
+  input.form-control {
+    background-color: $third-color;
+  }
+
+    // webkit-autofill {
+    // background-color: #B7B8B8;
+}
+
 
 .infoWindow {
   height: 250px;
@@ -79,9 +130,7 @@ html, body {
     height: auto;
     width: 180px;
   }
-
 }
-
 
 .recommended {
   position: absolute;
@@ -91,10 +140,8 @@ html, body {
   text-align: center;
   width: 240px;
   height: 300px;
-  background: rgba(46,41,78,0.8);
   border-radius: 10px;
   // box-shadow: 3px 3px 5px 6px #eae6f0;
-  color: #ACBDBA;
 }
 
 
@@ -124,3 +171,76 @@ html, body {
       margin-bottom: 25px;
     }
   }
+
+  .choice {
+    img {
+      width: 190px !important;
+    }
+  }
+
+
+.burger-menu {
+  position: absolute;
+  height: 32px;
+  left: 14px;
+  width: 30px;
+}
+
+.home-icon {
+  position: absolute;
+  left: 104px;
+  z-index: 100;
+}
+
+.title {
+  list-style: none;
+  position: absolute;
+  font-family: $title-font;
+  font-size: 25px;
+  margin: 0 auto;
+  top: 6px;
+  color: $third-color;
+  left: 110px;
+}
+
+.sidebar {
+  position: absolute;
+  z-index: 99;
+  top: 47px;
+  left: 0px;
+  width: 300px;
+  height: calc(100vh - 47px);
+  transition: left 0.5s;
+  overflow-y: scroll;
+  background-color: rgba(51, 86, 115, 0.6);
+  border: 3px solid $primary-color;
+  border-radius: 4px;
+
+}
+
+.open-sidebar { left: 0px; }
+.close-sidebar { left: -300px; }
+
+.userOptions {
+  display: none;
+}
+
+.usersMeals {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin: 10px 2px;
+    width: 100%;
+    height: 33vh;
+    //
+    &#breakfast, &#lunch, &#supper {
+      font-family: $title-font;
+      color: $third-color;
+      font-size: 20px;
+
+    }
+  }
+
+}

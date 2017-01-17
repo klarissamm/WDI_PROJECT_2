@@ -28,6 +28,11 @@ DARK PURPLE - #330C2F
 F2FDFF AND FFE5D4
 
 
+GREEN BASE COLOURS:
+6ccda4 - SEA
+bae7d3 - LAND
+
+
 
 
 ##Zomato API key:

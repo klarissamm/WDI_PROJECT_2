@@ -1,6 +1,4 @@
 $third-color: #EEEEFF;
-// $third-color: #8EB8E5;
-// $third-color: #A9DDD6;
 $primary-color: #335673;
 $second-color: #909392;
 $main-font: 'Lato', sans-serif;
@@ -118,9 +116,6 @@ a.nav-link.logout {
   input.form-control {
     background-color: $third-color;
   }
-
-    // webkit-autofill {
-    // background-color: #B7B8B8;
 }
 
 .modal-content.logginginbox {
@@ -151,6 +146,10 @@ a.nav-link.logout {
   }
 
   p {
+    margin: 2px;
+  }
+
+  a {
     margin: 2px;
   }
 
@@ -292,14 +291,8 @@ btn {
   display: none;
   color: $third-color;
   background-color: rgba(0, 0, 0, 0);
-  // border: 1px solid $third-color;
   border-radius: 5px;
   text-align: center;
-
-  // label {
-  //   font-family: $title-font;
-  //   font-size: 15px;
-  // }
 
   select.neighbourhood.form-control {
     color: $second-color;
@@ -352,7 +345,7 @@ btn {
           margin-top: 5px;
           margin-left: 3px;
         }
-        p {
+        p, a {
           font-family: $main-font;
           font-size: 14px;
           text-align: left;

@@ -17,7 +17,7 @@ App.init = function() {
   this.$modalContent.on('submit', 'form', this.handleForm);
   this.$main.on('click', '.add', this.addChoiceToSidebar);
   this.$recommended.on('click', '.close', this.closeFeatures);
-  $('.option').on('click', this.blah.bind(this));
+  $('.option').on('click', this.getChoice.bind(this));
 
   if (this.getToken()) {
     this.loggedInState();
@@ -29,7 +29,6 @@ App.init = function() {
 };
 
 App.addChoiceToSidebar = function(e) {
-  // remove all markers from map
   $.each(App.markersArray, (index, marker) => {
     marker.setMap(null);
   });
@@ -40,16 +39,28 @@ App.addChoiceToSidebar = function(e) {
       <img src=${$restaurantChoice.find('img').attr('src')}>
       <h4>${$restaurantChoice.find('h2').html()}</h4>
       <p>${$restaurantChoice.find('p').html()}</p>
+      <p>${$restaurantChoice.find('a').html()}</p>
     </div>
   `;
 
   $('.selected').html(restaurantChoiceTemplate).removeClass('selected');
-  // $('.selected').removeClass('selected');
+};
+
+App.getChoice = function(e) {
+  $(e.target).addClass('selected');
+  const meal = e.target.id;
+
+  $('.userOptions').show();
+  $('select').on('change', ()=> {
+    App.getRestaurants(meal);
+    $.each(App.markersArray, (index, marker) => {
+      marker.setMap(null);
+    });
+  });
 };
 
 App.addInfoWindowForRestaurant = function(restaurant, marker) {
   google.maps.event.addListener(marker, 'click', () => {
-    console.log(restaurant.restaurant);
     if (typeof this.infoWindow !== 'undefined') this.infoWindow.close();
 
     this.infoWindow = new google.maps.InfoWindow({
@@ -60,7 +71,8 @@ App.addInfoWindowForRestaurant = function(restaurant, marker) {
                   <h3>${ restaurant.restaurant.cuisines }</h3>
                   <br>
                   <p>${ restaurant.restaurant.location.address }</p>
-                  <button class='add' type='button' value='${ restaurant.restaurant.name }' name='button'>Add</button>
+                  <a href="${ restaurant.restaurant.url }">Website</a>
+                  <button class='add' type='button' name='button'>Add</button>
                 </div>`
     });
 
@@ -297,23 +309,6 @@ App.featuredRestaurant = function() {
 
 App.closeFeatures = function() {
   $('.recommended').hide();
-};
-
-
-App.blah = function(e) {
-  $(e.target).addClass('selected');
-  const meal = e.target.id;
-
-  $('.userOptions').show();
-  // $('.userOptions .go').on('click', () => {
-  //   App.getRestaurants(meal);
-  // });
-  $('select').on('change', ()=> {
-    App.getRestaurants(meal);
-    $.each(App.markersArray, (index, marker) => {
-      marker.setMap(null);
-    });
-  });
 };
 
 

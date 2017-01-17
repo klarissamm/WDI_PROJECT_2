@@ -11,11 +11,10 @@ App.init = function() {
   this.markersArray  = [];
 
   $('.logout').on('click', this.logout.bind(this));
-  $('.home-icon').on('click', this.welcome.bind(this));
+  $('.title').on('click', this.welcome.bind(this));
   $('.featured').on('click', this.featuredRestaurant);
-  $('.burger-menu').on('click', this.toggleSidebar);
+  $('.home-icon').on('click', this.toggleSidebar);
   this.$modalContent.on('submit', 'form', this.handleForm);
-  // this.$sidebar.on('click', '.close', this.closeSidebar);
   this.$main.on('click', '.add', this.addChoiceToSidebar);
   this.$recommended.on('click', '.close', this.closeFeatures);
   $('.option').on('click', this.blah.bind(this));
@@ -57,8 +56,10 @@ App.addInfoWindowForRestaurant = function(restaurant, marker) {
       content: `<div class='infoWindow'>
                   <img src=${ restaurant.restaurant.featured_image }>
                   <h2>${ restaurant.restaurant.name }</h2>
+                  <h3>User Rating: ${ restaurant.restaurant.user_rating.aggregate_rating }</h3>
+                  <h3>${ restaurant.restaurant.cuisines }</h3>
+                  <br>
                   <p>${ restaurant.restaurant.location.address }</p>
-                  <p>${ restaurant.restaurant.cuisines }</p>
                   <button class='add' type='button' value='${ restaurant.restaurant.name }' name='button'>Add</button>
                 </div>`
     });
@@ -81,9 +82,18 @@ App.createMarkerForRestaurant = function(restaurant) {
   this.addInfoWindowForRestaurant(restaurant, marker);
 };
 
+App.resetMap = function(restaurant){
+  const latlng = new google.maps.LatLng(restaurant.restaurant.location.latitude, restaurant.restaurant.location.longitude);
+  App.map.panTo(latlng);
+};
+
+
 App.loopThroughRestaurants = function(data) {
   $.each(data.restaurants, (index, restaurant) => {
     setTimeout(() => {
+      if (index === 0){
+        App.resetMap(restaurant);
+      }
       App.createMarkerForRestaurant(restaurant);
     }, index * 100);
   });
@@ -193,6 +203,7 @@ App.register = function(e){
 
 App.login = function(e) {
   e.preventDefault();
+  this.$modalContent.addClass('logginginbox');
   this.$modalContent.html(`
     <form method='post' action='/login'>
     <div class='modal-header'>
@@ -277,16 +288,11 @@ App.featuredRestaurant = function() {
 
   $('.recommended').html(`
     <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-    <h4>Our picks of the moment:</h4>
-    <p>Downtown:</p>
-    <h6>Cafe Medina</h6>
+    <h4>Pick of the week:</h4>
+    <img src="../images/medina.jpg">
+    <h6>Cafe Medina, Downtown</h6>
     <p>Lavender lattes and belgium waffles</p>
-    <p>Yaletown:</p>
-    <h6>Lupo Restaurant</h6>
-    <p>Delicious Italian in a converted home</p>
-    <p>Kitsilano</p>
-    <h6>Vij's</h6>
-    <p>Best Indian in Vancouver</p>`);
+`);
 };
 
 App.closeFeatures = function() {
@@ -299,8 +305,14 @@ App.blah = function(e) {
   const meal = e.target.id;
 
   $('.userOptions').show();
-  $('.userOptions .go').on('click', () => {
+  // $('.userOptions .go').on('click', () => {
+  //   App.getRestaurants(meal);
+  // });
+  $('select').on('change', ()=> {
     App.getRestaurants(meal);
+    $.each(App.markersArray, (index, marker) => {
+      marker.setMap(null);
+    });
   });
 };
 

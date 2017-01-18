@@ -35,6 +35,8 @@ html, body {
 
 .navbar.navbar-light.bg-faded {
   background: $primary-color;
+  border-top: 2px solid #0A2740;
+  border-bottom: 3px solid #0A2740;
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -250,7 +252,7 @@ a.nav-link.logout {
   left: 32px;
   width: 37px;
   height: auto;
-  top: 36px;
+  top: 35px;
 }
 
 .title {
@@ -350,8 +352,8 @@ btn {
           text-align: left;
           margin-left: 3px;
           margin-top: 15px;
+          margin-bottom: 0px;
         }
-
 
       }
     }

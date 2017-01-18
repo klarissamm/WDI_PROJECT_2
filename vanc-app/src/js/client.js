@@ -39,7 +39,6 @@ App.addChoiceToSidebar = function(e) {
       <img src=${$restaurantChoice.find('img').attr('src')}>
       <h4>${$restaurantChoice.find('h2').html()}</h4>
       <p>${$restaurantChoice.find('p').html()}</p>
-      <p>${$restaurantChoice.find('a').html()}</p>
     </div>
   `;
 
@@ -69,9 +68,11 @@ App.addInfoWindowForRestaurant = function(restaurant, marker) {
                   <h2>${ restaurant.restaurant.name }</h2>
                   <h3>User Rating: ${ restaurant.restaurant.user_rating.aggregate_rating }</h3>
                   <h3>${ restaurant.restaurant.cuisines }</h3>
+                  <a href="${ restaurant.restaurant.url }">Visit Website</a>
+                  <br>
                   <br>
                   <p>${ restaurant.restaurant.location.address }</p>
-                  <a href="${ restaurant.restaurant.url }">Website</a>
+
                   <button class='add' type='button' name='button'>Add</button>
                 </div>`
     });
@@ -101,6 +102,7 @@ App.resetMap = function(restaurant){
 
 
 App.loopThroughRestaurants = function(data) {
+  console.log(data);
   $.each(data.restaurants, (index, restaurant) => {
     setTimeout(() => {
       if (index === 0){
@@ -173,8 +175,8 @@ App.loggedOutState = function() {
     <h3 class='modal-title'>Feeling hungry?</h3>
     </div>
     <div class='modal-body'>
-    <h6>Well you're in luck, because Vancouver has <span>the best food</span> in the world!! Choose what meal you're looking for and then tell us what neighbourhood you're in... We'll work some magic to let you know what's tasty nearby...</h6>
-    <p>But first of all, please register or login below:</p>
+    <h6>You're in luck! Vancouver is famous for having <span>the best food</span> in the world... Click on the start button at the top left of the page to find the highest rated restaurants in any neighbourhood and add them to your day meal planner.</h6>
+    <p>But first please register or login:</p>
     <button type='button' name='button' class='register'>Register</button>
     <button type='button' name='button' class='login'>Log In</button>
     </div>`);

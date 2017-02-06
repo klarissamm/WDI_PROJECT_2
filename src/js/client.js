@@ -10,6 +10,7 @@ App.init = function() {
   this.$fullImage    = $('.full-image');
   this.markersArray  = [];
 
+
   $('.logout').on('click', this.logout.bind(this));
   $('.title').on('click', this.welcome.bind(this));
   $('.featured').on('click', this.featuredRestaurant);
@@ -315,3 +316,6 @@ App.closeFeatures = function() {
 
 
 $(App.init.bind(App));
+
+
+//note from nat

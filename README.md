@@ -49,7 +49,9 @@ I designed how the app would look with wireframes using Balsamiq, mainly the map
 
 I used Snazzy Maps for the customised map as I wanted something that fitted my color scheme, and looked cleaner than the general Google maps theme.
 
-***BALSAMIQ WIREFRAMES***
+![image](http://i.imgur.com/bmEC1hA.jpg)
+![image](http://i.imgur.com/ZCmSMTA.jpg)
+
 
 ##API
 

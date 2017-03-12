@@ -1,4 +1,3 @@
-# WDI_PROJECT_2
 #VancApp
 
 **A Google Maps application by Klarissa Munz**
@@ -11,15 +10,20 @@ See it here: [VancApp](https://vanc-app.herokuapp.com/).
 
 ##Overview
 
-VancApp is a Vancouver restaurant map that makes restaurant searches easier. It was created as my second project for a 12-week Web Development Immersive course at General Assembly in London. I used to live in Vancouver, and the great places to eat and hang out is one of the many things I miss about it, so I based the app there instead of London.
+VancApp is a Vancouver restaurant map that makes restaurant searches easier. It was created as my second project for a 12-week Web Development Immersive course at General Assembly in London. I used to live in Vancouver, and the great places to eat and hang out is one of the many things I miss about it, so I based the app there instead of London. Initially, the app was going to take the location of the user to find the best and nearest places to eat for a particular meal, but as an avid planner, I decided a user should have the ability to plan ahead, and therefore the app allows users to find the best and nearest restaurants to any location.
+
+VancApp is a MEN stack app - Mongo, Express and Node - with jQuery on the front-end. It was built in 4 days after a month of learning. 
 
 ##How it works
 
-Once you're logged into the app, you are presented with a map of central Vancouver. Upon clicking the START button, a sidebar slides out, so that you may then choose breakfast, lunch or supper to begin your search for the perfect place to eat.
+A photo of Vancouver greets the user, with a delay on the modal that explains what the app does, and allows a user to log in or register. Log in / register is built on JWT authentication. Once the user has logged in or registered, they are assigned a unique session token which allows them to make the API requests necessary for the application to work.
+
+Once the user has logged in the app, they are presented with a map of central Vancouver. Upon clicking the START button, a sidebar slides out, with the option of choosing breakfast, lunch or supper to begin a search for the perfect place to eat.
 
 ![image](http://i.imgur.com/K32JGyM.jpg)
 
-Once you've clicked on the right type of meal, you can filter by neighbourhood from a drop-down selection box option menu. This is so that you can plan ahead, rather than just find places that are near your current location.
+Once a user has clicked on the type of meal they are looking for, they can filter by neighbourhood from a drop-down selection box option menu. I decided to restrict the number of locations in order to keep the app centrally-focussed.
+
 
 ![image](http://i.imgur.com/Gk9PHQ6.jpg)
 
@@ -27,25 +31,45 @@ Pins will then drop to indicate the restaurants that exist for that type of meal
  
 ![image](http://i.imgur.com/lMG5Oik.jpg)
 
-You can click on these to bring up an info window containing additional information, such as an image, the type of cuisine of the restaurant, and the exact address. 
+Users can click on these to bring up an info window containing additional information, such as an image, the type of cuisine of the restaurant, and the exact address. 
 
 ![image](http://i.imgur.com/BqMllMm.jpg)
 
-Once you find one that you like the look of, you can add it to your day planner and move onto the next meal until you have a place to eat for breakfast, lunch and supper!
+Once a user finds a place they like the look of, they can add it to their day planner and move onto the next meal until they've planned a place to eat for breakfast, lunch and supper!
+
+They can always then run a new search as well.
 
 ![image](http://i.imgur.com/RGSwE8z.jpg)
 
-##Background
+##Background and design
+
+Vancouver is a beautiful city on the sea and I wanted the design and colour choice to reflect that. I matched the blues and greys of the nav bar and map to the photo of Vancouver that begins the user's journey on the app. All the other colours are simply darker or lighter shades of the same blue, combined with white, in order to have a sharp and clean look.
+
+I designed how the app would look with wireframes using Balsamiq, mainly the map and the sidebar.
+
+I used Snazzy Maps for the customised map as I wanted something that fitted my color scheme, and looked cleaner than the general Google maps theme.
+
+***BALSAMIQ WIREFRAMES***
+
+##API
 
 Register and Login was built on JWT authentication. I used jQuery, ES6, HTML5 and SASS on the front-end, Node/Express on the back-end, and Gulp and Bower as task managers.
 
-I used the Zomato API to serve data to Google Maps and filtered the data for the relevant neighbourhood and type of meal.
+After researching which API would best suit the app, I used the Zomato API to serve data to Google Maps and filtered the data on the front-end for the relevant neighbourhood and type of meal.
 
-##Challenges
-
-The biggest challenge was moving the information about the restaurant from the info window to the day meal planner in the side bar.
 
 ##What next?
 
-In the future, I wish to add further filters, and perhaps expand the app so that it deals with other areas of Vancouver that are further afield.
+I would love to add further filters, and perhaps add other cities to the mix, like New York or Toronto.
 
+##Technnology used
+
+<li>HTML5
+<li>SCSS
+<li>jQuery
+<li>Node.js
+<li>Express.js
+<li>Gulp
+<li>Bower
+<li>GoogleMaps API
+<li>Zomato AP

@@ -74,4 +74,4 @@ I would love to add further filters, and perhaps add other cities to the mix, li
 <li>Gulp
 <li>Bower
 <li>GoogleMaps API
-<li>Zomato AP
+<li>Zomato API

@@ -1,6 +1,6 @@
 #VancApp
 
-**A Google Maps application by Klarissa Munz**
+**A Google Maps application by Klarissa M**
 
 See it here: [VancApp](https://vanc-app.herokuapp.com/).
 
